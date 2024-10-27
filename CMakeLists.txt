@@ -14,7 +14,11 @@ find_package(Qt6 COMPONENTS
         Widgets
         REQUIRED)
 
-add_executable(RepetitorPlatform main.cpp)
+add_executable(RepetitorPlatform src/main.cpp
+        src/models/User.h
+        src/controllers/UserController.h
+        src/controllers/UserController.cpp
+        src/models/User.cpp)
 target_link_libraries(RepetitorPlatform
         Qt::Core
         Qt::Gui
