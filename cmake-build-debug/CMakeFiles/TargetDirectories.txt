@@ -1,0 +1,5 @@
+C:/pnya/RepetitorPlatform/cmake-build-debug/CMakeFiles/RepetitorPlatform.dir
+C:/pnya/RepetitorPlatform/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/pnya/RepetitorPlatform/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+C:/pnya/RepetitorPlatform/cmake-build-debug/CMakeFiles/RepetitorPlatform_autogen_timestamp_deps.dir
+C:/pnya/RepetitorPlatform/cmake-build-debug/CMakeFiles/RepetitorPlatform_autogen.dir
