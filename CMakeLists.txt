@@ -15,10 +15,14 @@ find_package(Qt6 COMPONENTS
         REQUIRED)
 
 add_executable(RepetitorPlatform src/main.cpp
-        src/models/User.h
-        src/controllers/UserController.h
-        src/controllers/UserController.cpp
-        src/models/User.cpp)
+        src/auth/auth.ui
+        src/auth/auth.h
+        src/auth/auth.cpp
+        src/register/register.cpp
+        src/register/register.h
+        src/register/register.ui
+        src/sha256/sha256.cpp
+        src/sha256/sha256.h)
 target_link_libraries(RepetitorPlatform
         Qt::Core
         Qt::Gui
@@ -52,4 +56,5 @@ if (WIN32 AND NOT DEFINED CMAKE_TOOLCHAIN_FILE)
                 "${QT_INSTALL_PATH}/bin/Qt6${QT_LIB}${DEBUG_SUFFIX}.dll"
                 "$<TARGET_FILE_DIR:${PROJECT_NAME}>")
     endforeach (QT_LIB)
+
 endif ()
