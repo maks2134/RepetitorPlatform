@@ -1,13 +1,14 @@
 #ifndef REPETITORPLATFORM_REGISTER_H
 #define REPETITORPLATFORM_REGISTER_H
 
-#include <QWidget>
+#include "../authbase/authbase.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class Register; }
 QT_END_NAMESPACE
 
-class Register : public QWidget {
+
+class Register : public AuthBase {
 Q_OBJECT
 
 public:

@@ -22,7 +22,20 @@ add_executable(RepetitorPlatform src/main.cpp
         src/register/register.h
         src/register/register.ui
         src/sha256/sha256.cpp
-        src/sha256/sha256.h)
+        src/sha256/sha256.h
+        src/authbase/authbase.cpp
+        src/authbase/authbase.h
+        src/test/testbase.ui
+        src/main/mainwin.cpp
+        src/main/mainwin.h
+        src/main/mainwin.ui
+        src/test/QuestionManager.cpp
+        src/test/QuestionManager.h
+        src/test/NavigationManager.cpp
+        src/test/NavigationManager.h
+        src/test/TestBase.cpp
+        src/test/TestBase.h
+)
 target_link_libraries(RepetitorPlatform
         Qt::Core
         Qt::Gui

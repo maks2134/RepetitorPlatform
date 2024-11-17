@@ -36,7 +36,6 @@ void SHA256::update(const BYTE* data, size_t len) {
 void SHA256::final(BYTE hash[BLOCK_SIZE]) {
     size_t i = datalen;
 
-    // Pad remaining data
     if (datalen < 56) {
         data[i++] = 0x80;
         while (i < 56)

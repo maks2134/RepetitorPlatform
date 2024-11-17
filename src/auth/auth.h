@@ -3,12 +3,12 @@
 
 #include <QWidget>
 #include <QMap>
-
+#include "../authbase/authbase.h"
 QT_BEGIN_NAMESPACE
 namespace Ui { class Auth; }
 QT_END_NAMESPACE
 
-class Auth : public QWidget {
+class Auth : public AuthBase {
 Q_OBJECT
 
 public:
@@ -21,7 +21,6 @@ private slots:
 
 private:
     Ui::Auth *ui;
-    QMap<QString, QString> loadCredentials();
 };
 
 #endif //REPETITORPLATFORM_AUTH_H
