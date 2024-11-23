@@ -3,8 +3,9 @@
 
 #include <QVector>
 #include <QString>
+#include "../repetitors/Repetitor.h"
 
-class QuestionManager {
+class QuestionManager: public Repetitor{
 public:
     void loadQuestions(const QString &fileName);
     QString getQuestion(int index) const;

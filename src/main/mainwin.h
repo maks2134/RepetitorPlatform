@@ -6,13 +6,14 @@
 #include <QMap>
 #include <QDate>
 #include <ui_mainWin.h>
-#include "../test/testBase.h"  // Include your test window header
+#include "../basewin/basewin.h"
+#include "../test/testBase.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class mainwin; }
 QT_END_NAMESPACE
 
-class mainWin : public QWidget {
+class mainWin : public BaseWin {  // Наследование
 Q_OBJECT
 
 public:
@@ -21,7 +22,6 @@ public:
 
 private:
     Ui::mainwin *ui;
-    QMap<QDate, QString> calendarData;
 
     void loadCalendarData(const QString &fileName);
     void setupCalendar();
@@ -29,6 +29,12 @@ private:
 private slots:
     void updateCalendar(const QDate &date);
     void onTestButtonClicked();
+    void onAccountButtonClicked();
+    void onSearchButtonClicked();  // Новый слот для поиска
+
+protected:
+    QMap<QDate, QString> calendarData;
+    void saveCalendarDataToFile(const QString &fileName);
 };
 
 #endif // REPETITORPLATFORM_MAINWIN_H

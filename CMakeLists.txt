@@ -35,6 +35,13 @@ add_executable(RepetitorPlatform src/main.cpp
         src/test/NavigationManager.h
         src/test/TestBase.cpp
         src/test/TestBase.h
+        src/account/account.cpp
+        src/account/account.h
+        src/account/account.ui
+        src/basewin/basewin.cpp
+        src/basewin/basewin.h
+        src/finder/BinarySearchTree.h
+        src/repetitors/Repetitor.h
 )
 target_link_libraries(RepetitorPlatform
         Qt::Core
