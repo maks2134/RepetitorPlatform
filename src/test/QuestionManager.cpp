@@ -1,7 +1,18 @@
 #include "QuestionManager.h"
 #include <QFile>
-#include <QTextStream>
 #include <QMessageBox>
+
+QString QuestionManager::getQuestion(int index) const {
+    return questions.value(index);
+}
+
+QString QuestionManager::getCorrectAnswer(int index) const {
+    return correctAnswers.value(index);
+}
+
+int QuestionManager::getTotalQuestions() const {
+    return questions.size();
+}
 
 void QuestionManager::loadQuestions(const QString &fileName) {
     QFile file(fileName);
@@ -19,16 +30,4 @@ void QuestionManager::loadQuestions(const QString &fileName) {
             correctAnswers.append(parts[1]);
         }
     }
-}
-
-QString QuestionManager::getQuestion(int index) const {
-    return questions.value(index);
-}
-
-QString QuestionManager::getCorrectAnswer(int index) const {
-    return correctAnswers.value(index);
-}
-
-int QuestionManager::getTotalQuestions() const {
-    return questions.size();
 }

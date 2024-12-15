@@ -1,41 +1,69 @@
-#ifndef REPETITORPLATFORM_BINARYSEARCHTREE_H
-#define REPETITORPLATFORM_BINARYSEARCHTREE_H
+#ifndef BINARYSEARCHTREE_CONTAINER_H
+#define BINARYSEARCHTREE_CONTAINER_H
 
-#include <QList>
+#include <iostream>
+#include <stack>
+#include <optional>
+#include <QVector>
 
-template <typename T>
+template <typename K, typename V>
 class BinarySearchTree {
 private:
     struct Node {
-        T data;
+        K key;
+        V value;
         Node *left;
         Node *right;
 
-        Node(const T &data) : data(data), left(nullptr), right(nullptr) {}
+        Node(const K &key, const V &value) : key(key), value(value), left(nullptr), right(nullptr) {}
     };
 
     Node *root;
 
-    void insert(Node *&node, const T &data) {
+    // Вспомогательные методы для рекурсивной работы
+    void insert(Node *&node, const K &key, const V &value) {
         if (!node) {
-            node = new Node(data);
+            node = new Node(key, value);
             return;
         }
-        if (data < node->data) {
-            insert(node->left, data);
+        if (key < node->key) {
+            insert(node->left, key, value);
         } else {
-            insert(node->right, data);
+            insert(node->right, key, value);
         }
     }
 
-    void search(Node *node, const T &key, QList<T> &results, bool (*equals)(const T &, const T &)) const {
-        if (!node) return;
+    Node *remove(Node *node, const K &key) {
+        if (!node) return nullptr;
 
-        if (equals(node->data, key)) {
-            results.append(node->data);
+        if (key < node->key) {
+            node->left = remove(node->left, key);
+        } else if (key > node->key) {
+            node->right = remove(node->right, key);
+        } else {
+            if (!node->left) {
+                Node *rightChild = node->right;
+                delete node;
+                return rightChild;
+            } else if (!node->right) {
+                Node *leftChild = node->left;
+                delete node;
+                return leftChild;
+            }
+
+            Node *minLargerNode = findMin(node->right);
+            node->key = minLargerNode->key;
+            node->value = minLargerNode->value;
+            node->right = remove(node->right, minLargerNode->key);
         }
-        search(node->left, key, results, equals);
-        search(node->right, key, results, equals);
+        return node;
+    }
+
+    Node *findMin(Node *node) const {
+        while (node && node->left) {
+            node = node->left;
+        }
+        return node;
     }
 
     void clear(Node *node) {
@@ -45,24 +73,117 @@ private:
         delete node;
     }
 
+    void print(Node *node) const {
+        if (!node) return;
+        print(node->left);
+        std::cout << node->key << ": " << node->value << " ";
+        print(node->right);
+    }
+
 public:
     BinarySearchTree() : root(nullptr) {}
     ~BinarySearchTree() { clear(root); }
 
-    void insert(const T &data) {
-        insert(root, data);
+    void add(const K &key, const V &value) { insert(root, key, value); }
+
+    void remove(const K &key) { root = remove(root, key); }
+
+    void print() const {
+        print(root);
+        std::cout << std::endl;
     }
 
-    QList<T> search(const T &key, bool (*equals)(const T &, const T &)) const {
-        QList<T> results;
-        search(root, key, results, equals);
-        return results;
+    // Итератор
+    class Iterator {
+    private:
+        Node *current;
+        std::stack<Node *> nodeStack;
+
+        void pushLeft(Node *node) {
+            while (node) {
+                nodeStack.push(node);
+                node = node->left;
+            }
+        }
+
+    public:
+        Iterator(Node *root) : current(nullptr) {
+            pushLeft(root);
+            if (!nodeStack.empty()) {
+                current = nodeStack.top();
+                nodeStack.pop();
+            }
+        }
+
+        // Операторы
+        Iterator &operator++() {
+            if (current->right) {
+                pushLeft(current->right);
+            }
+            if (!nodeStack.empty()) {
+                current = nodeStack.top();
+                nodeStack.pop();
+            } else {
+                current = nullptr;
+            }
+            return *this;
+        }
+
+        K &key() const {
+            return current->key;
+        }
+
+        V &value() const {
+            return current->value;
+        }
+
+        bool operator==(const Iterator &other) const {
+            return current == other.current;
+        }
+
+        bool operator!=(const Iterator &other) const {
+            return current != other.current;
+        }
+    };
+
+    // Методы для работы с итераторами
+    Iterator begin() const {
+        return Iterator(root);
     }
 
-    void clear() {
-        clear(root);
-        root = nullptr;
+    Iterator end() const {
+        return Iterator(nullptr);
+    }
+
+    bool contains(const K &key) const {
+        Node *current = root;
+        while (current) {
+            if (key < current->key) {
+                current = current->left;
+            } else if (key > current->key) {
+                current = current->right;
+            } else {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    V& operator[](const K &key) {
+        Node *current = root;
+        while (current) {
+            if (key < current->key) {
+                current = current->left;
+            } else if (key > current->key) {
+                current = current->right;
+            } else {
+                return current->value;
+            }
+        }
+        // Если ключа нет, вставим новый узел с пустым значением
+        add(key, V());
+        return operator[](key); // Возвращаем добавленное значение
     }
 };
 
-#endif
+#endif // BINARYSEARCHTREE_CONTAINER_H

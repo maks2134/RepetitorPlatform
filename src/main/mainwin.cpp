@@ -8,17 +8,12 @@ mainWin::mainWin(QWidget *parent) :
         BaseWin(parent), ui(new Ui::mainwin) {
     ui->setupUi(this);
 
-    // Установка имени, предмета и даты из базового класса
-    setName("Default Name");
-    setSubject("Default Subject");
-    setAvailableDate(QDate::currentDate());
-
+    loadRepetitors("C:\\pnya\\RepetitorPlatform\\src\\data\\repetitors.txt");
     loadCalendarData("C:\\pnya\\RepetitorPlatform\\src\\data\\calendar.txt");
-    setupCalendar();
 
     connect(ui->pushButton_4, &QPushButton::clicked, this, &mainWin::onAccountButtonClicked);
-    connect(ui->pushButton_5, &QPushButton::clicked, this, &mainWin::onTestButtonClicked);
-    connect(ui->pushButton, &QPushButton::clicked, this, &mainWin::onSearchButtonClicked);
+    connect(ui->pushButton_5, &QPushButton::clicked, this, &mainWin::onSearchButtonClicked);
+    connect(ui->repetitorListWidget, &QListWidget::itemDoubleClicked, this, &mainWin::onRepetitorSelected);
 }
 
 mainWin::~mainWin() {
@@ -31,48 +26,8 @@ void mainWin::loadCalendarData(const QString &fileName) {
         QMessageBox::warning(this, "Error", "Cannot open file");
         return;
     }
-
-    QTextStream in(&file);
-    while (!in.atEnd()) {
-        QString line = in.readLine();
-        QStringList parts = line.split(",");
-        if (parts.size() == 2) {
-            QDate date = QDate::fromString(parts[0], "yyyy-MM-dd");
-            QString event = parts[1];
-            if (date.isValid()) {
-                addEvent(date, event);  // Используем метод из Repetitor
-            }
-        }
-    }
 }
 
-void mainWin::setupCalendar() {
-    connect(ui->calendarWidget, &QCalendarWidget::clicked, this, &mainWin::updateCalendar);
-}
-
-void mainWin::updateCalendar(const QDate &date) {
-    QString event = getEvent(date);  // Используем метод из Repetitor
-    if (!event.isEmpty()) {
-        QMessageBox::information(this, "Event", event);
-    } else {
-        QMessageBox::information(this, "No Event", "No events for this date.");
-    }
-}
-
-void mainWin::saveCalendarDataToFile(const QString &fileName) {
-    QFile file(fileName);
-    if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
-        QMessageBox::warning(this, "Error", "Cannot open file for writing");
-        return;
-    }
-
-    QTextStream out(&file);
-    QMap<QDate, QString> events = getAllEvents();
-    for (auto it = events.begin(); it != events.end(); ++it) {
-        out << it.key().toString("yyyy-MM-dd") << "," << it.value() << "\n";
-    }
-    file.close();
-}
 
 void mainWin::onAccountButtonClicked() {
     saveCalendarDataToFile("C:\\pnya\\RepetitorPlatform\\src\\data\\items.txt");
@@ -87,17 +42,56 @@ void mainWin::onTestButtonClicked() {
     this->close();
 }
 
-void mainWin::onSearchButtonClicked() {
-    QString subject = ui->lineEdit->text().trimmed();
-    if (subject.isEmpty()) {
-        QMessageBox::warning(this, "Error", "Please enter a subject to search");
+
+void mainWin::loadRepetitors(const QString &fileName) {
+    QFile file(fileName);
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        QMessageBox::warning(this, "Error", "Cannot open repetitors file");
         return;
     }
 
-    if (getSubject() == subject) {
-        QMessageBox::information(this, "Repetitor Found", "Name: " + getName() +
-                                                          "\nDate: " + getAvailableDate().toString("yyyy-MM-dd"));
-    } else {
-        QMessageBox::information(this, "No Results", "No repetitor found for this subject.");
+    QTextStream in(&file);
+    while (!in.atEnd()) {
+        QString line = in.readLine();
+        QStringList parts = line.split(';');
+        if (parts.size() == 3) {
+            QString name = parts[0];
+            QString subject = parts[1];
+            QString testFilePath = parts[2];
+
+            Repetitor repetitor(name, subject, testFilePath);
+            if (subjectTree.contains(subject)) {
+                subjectTree[subject].append(repetitor);
+            } else {
+                subjectTree.add(subject, {repetitor});
+            }
+        }
     }
 }
+
+
+void mainWin::onRepetitorSelected(QListWidgetItem *item) {
+    QString testFilePath = item->data(Qt::UserRole).toString();
+    TestBase *testWidget = new TestBase;
+    testWidget->loadTest(testFilePath);
+    testWidget->show();
+    this->close();
+}
+
+void mainWin::onSearchButtonClicked() {
+    // Implement the functionality of the method here
+    QString subject = ui->searchLineEdit->text();
+    ui->repetitorListWidget->clear();
+
+    if (subjectTree.contains(subject)) {
+        auto repetitors = subjectTree[subject];
+        for (const auto &repetitor : repetitors) {
+            QListWidgetItem *item = new QListWidgetItem(repetitor.name);
+            item->setData(Qt::UserRole, repetitor.testFilePath);
+            ui->repetitorListWidget->addItem(item);
+        }
+    } else {
+        QMessageBox::information(this, "Search Result", "No repetitors found for this subject.");
+    }
+}
+

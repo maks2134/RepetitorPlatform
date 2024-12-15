@@ -8,7 +8,7 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class Auth; }
 QT_END_NAMESPACE
 
-class Auth : public AuthBase {
+class Auth : public AuthBase{
 Q_OBJECT
 
 public:

@@ -1,10 +1,14 @@
-#include "authbase.h"
+#include "AuthBase.h"
 #include "../sha256/sha256.h"
-#include <QFile>
-#include <QTextStream>
 #include <QMessageBox>
 
-AuthBase::AuthBase(QWidget *parent) : QWidget(parent) {}
+AuthBase::AuthBase(QWidget *parent)
+        : QWidget(parent), credentialFile("C:\\pnya\\RepetitorPlatform\\src\\data\\credentials.txt") {
+    // Загрузка учетных данных
+    if (!credentialFile.load()) {
+        QMessageBox::warning(this, "Ошибка", "Не удалось загрузить учетные данные.");
+    }
+}
 
 QString AuthBase::hashPassword(const QString &password) {
     SHA256 sha256;
@@ -19,37 +23,11 @@ QString AuthBase::hashPassword(const QString &password) {
     return hashedPassword;
 }
 
-QMap<QString, QString> AuthBase::loadCredentials() {
-    QMap<QString, QString> credentials;
-    QFile file("C:\\pnya\\RepetitorPlatform\\src\\data\\credentials.txt");
-
-    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        QMessageBox::warning(this, "Ошибка", "Не удалось открыть файл с учетными данными.");
-        return credentials;
-    }
-
-    QTextStream in(&file);
-    while (!in.atEnd()) {
-        QString line = in.readLine();
-        QStringList parts = line.split(" ");
-        if (parts.size() == 2) {
-            credentials.insert(parts[0], parts[1]);
-        }
-    }
-
-    file.close();
-    return credentials;
+bool AuthBase::saveCredential(const QString &login, const QString &hashedPassword) {
+    credentialFile.addCredential(login, hashedPassword);
+    return credentialFile.save();
 }
 
-bool AuthBase::saveCredential(const QString &login, const QString &hashedPassword) {
-    QFile file("C:\\pnya\\RepetitorPlatform\\src\\data\\credentials.txt");
-    if (file.open(QIODevice::Append | QIODevice::Text)) {
-        QTextStream out(&file);
-        out << login << " " << hashedPassword << "\n";
-        file.close();
-        return true;
-    } else {
-        QMessageBox::critical(this, "Ошибка", "Не удалось открыть файл");
-        return false;
-    }
+QMap<QString, QString> AuthBase::loadCredentials() {
+    return credentialFile.getCredentials();
 }

@@ -38,10 +38,29 @@ add_executable(RepetitorPlatform src/main.cpp
         src/account/account.cpp
         src/account/account.h
         src/account/account.ui
-        src/basewin/basewin.cpp
         src/basewin/basewin.h
         src/finder/BinarySearchTree.h
         src/repetitors/Repetitor.h
+        src/file/File.cpp
+        src/file/File.h
+        src/file/QuestionFile.cpp
+        src/file/QuestionFile.h
+        src/file/CalendarFile.cpp
+        src/file/CalendarFile.h
+        src/file/CredentialFile.cpp
+        src/file/CredentialFile.h
+        src/exception/ErrorBase.cpp
+        src/exception/ErrorBase.h
+        src/exception/FileError.cpp
+        src/exception/FileError.h
+        src/exception/CalendarError.cpp
+        src/exception/CalendarError.h
+        src/exception/AuthError.cpp
+        src/exception/AuthError.h
+        src/exception/CredentialFileError.cpp
+        src/exception/CredentialFileError.h
+        src/finder/RepetitorSearchWidget.cpp
+        src/finder/RepetitorSearchWidget.h
 )
 target_link_libraries(RepetitorPlatform
         Qt::Core

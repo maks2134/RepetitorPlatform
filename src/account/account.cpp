@@ -1,3 +1,38 @@
+#ifndef REPETITORPLATFORM_ACCOUNT_H
+#define REPETITORPLATFORM_ACCOUNT_H
+
+#include "../main/mainwin.h"
+#include <QWidget>
+#include "../basewin/basewin.h"
+#include "../repetitors/Repetitor.h" // Подключаем класс репетитора
+#include <QMap> // Для хранения предметов и репетиторов
+
+QT_BEGIN_NAMESPACE
+namespace Ui { class account; }
+QT_END_NAMESPACE
+
+class account : public BaseWin { // Наследуемся от BaseWin
+Q_OBJECT
+
+public:
+    explicit account(QWidget *parent = nullptr);
+    ~account();
+
+private:
+    Ui::account *ui;
+    QMap<QString, QVector<QString>> subjectRepetitors; // Карта: предмет -> список репетиторов
+
+    void loadRepetitorsFromFile(const QString &fileName); // Загрузка данных
+    void saveRepetitorsToFile(const QString &fileName);   // Сохранение данных
+    void displayItems();                                  // Отображение предметов и репетиторов
+
+private slots:
+    void onDeleteButtonClicked();
+    void onReturnButtonClicked();
+};
+
+#endif //REPETITORPLATFORM_ACCOUNT_H
+
 #include "account.h"
 #include "ui_account.h"
 #include <QMessageBox>
@@ -6,10 +41,10 @@ account::account(QWidget *parent) :
         BaseWin(parent), // Наследуемся от BaseWin
         ui(new Ui::account) {
     ui->setupUi(this); // Загружаем интерфейс account
-    loadCalendarDataFromFile("C:\\pnya\\RepetitorPlatform\\src\\data\\items.txt");
+    loadCalendarDataFromFile("C:\\pnya\\RepetitorPlatform\\src\\data\\repetitors.txt");
     // Подключаем кнопку "Удалить" к слоту
     connect(ui->pushButton_2, &QPushButton::clicked, this, &account::onDeleteButtonClicked);
-
+    connect(ui->pushButton, &QPushButton::clicked, this, &account::onReturnButtonClicked);
     // Отображаем все предметы
     displayItems();
 }
@@ -19,42 +54,105 @@ account::~account() {
 }
 
 void account::displayItems() {
-    QString allItems;
-    qDebug() << "Содержимое calendarData:" << calendarData;
-    if (calendarData.isEmpty()) {
-        allItems = "Нет данных для отображения.";
-    } else {
-        for (auto it = calendarData.begin(); it != calendarData.end(); ++it) {
-            allItems += it.key().toString("yyyy-MM-dd") + ": " + it.value() + "\n";
-        }
+    ui->listWidget->clear(); // Очистка списка перед обновлением
+
+    QString subjectInput = ui->subjectInputLineEdit->text().trimmed();
+
+    if (subjectInput.isEmpty()) {
+//        ui->statusLabel->setText("Введите название предмета.");
+        return;
     }
 
-    // Устанавливаем текст в label
-    ui->label_2->setText(allItems);
+    if (!subjectRepetitors.contains(subjectInput)) {
+//        ui->statusLabel->setText("Нет репетиторов по данному предмету.");
+        return;
+    }
+
+//    ui->statusLabel->clear();
+    const QVector<QString> &repetitors = subjectRepetitors[subjectInput];
+
+    for (const QString &name : repetitors) {
+        QListWidgetItem *item = new QListWidgetItem(name, ui->listWidget);
+        item->setFlags(item->flags() | Qt::ItemIsSelectable | Qt::ItemIsUserCheckable);
+        item->setCheckState(Qt::Unchecked); // Добавляем чекбокс для подтверждения
+    }
 }
 
-void account::onDeleteButtonClicked() {
-    QString itemToDelete = ui->lineEdit->text();
-    bool found = false;
 
-    // Удаляем предмет из calendarData
-    for (auto it = calendarData.begin(); it != calendarData.end();) {
-        if (it.value() == itemToDelete) {
-            it = calendarData.erase(it);
-            found = true;
-        } else {
-            ++it;
+
+void account::onDeleteButtonClicked() {
+    QString subjectInput = ui->subjectInputLineEdit->text().trimmed();
+
+    if (!subjectRepetitors.contains(subjectInput)) {
+//        ui->statusLabel->setText("Нет такого предмета для удаления.");
+        return;
+    }
+
+    QVector<QString> &repetitors = subjectRepetitors[subjectInput];
+    QList<QListWidgetItem *> selectedItems = ui->listWidget->selectedItems();
+
+    for (QListWidgetItem *item : selectedItems) {
+        QString nameToDelete = item->text();
+        repetitors.removeAll(nameToDelete); // Удаляем репетитора из данных
+        delete item; // Удаляем элемент из интерфейса
+    }
+
+//    ui->statusLabel->setText("Репетитор удалён.");
+    saveRepetitorsToFile("C:\\pnya\\RepetitorPlatform\\src\\data\\repetitors.txt"); // Сохранение изменений
+}
+
+
+
+void account::onReturnButtonClicked() {
+    mainWin *mainWindow = new mainWin;  // Создаём новое окно mainWin
+    mainWindow->show();
+    this->close();  // Закрываем текущее окно
+}
+
+void account::loadRepetitorsFromFile(const QString &fileName) {
+    QFile file(fileName);
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qDebug() << "Cannot open file:" << fileName;
+        return;
+    }
+
+    subjectRepetitors.clear(); // Очищаем текущие данные
+
+    QTextStream in(&file);
+
+    while (!in.atEnd()) {
+        QString line = in.readLine();
+        QStringList parts = line.split(";");
+        if (parts.size() >= 2) { // Достаточно 2 частей: предмет и имя репетитора
+            QString subject = parts[0].trimmed();
+            QString tutorName = parts[1].trimmed();
+
+            // Добавляем имя репетитора в список по предмету
+            subjectRepetitors[subject].append(tutorName);
         }
     }
 
-    if (found) {
-        // Сохраняем данные в файл
-        saveCalendarDataToFile("C:\\pnya\\RepetitorPlatform\\src\\data\\items.txt");
-        QMessageBox::information(this, "Success", "Item deleted successfully!");
-    } else {
-        QMessageBox::warning(this, "Error", "Item not found!");
+    file.close();
+    displayItems(); // Обновляем отображение
+}
+
+
+
+void account::saveRepetitorsToFile(const QString &fileName) {
+    QFile file(fileName);
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        qDebug() << "Cannot open file for saving:" << fileName;
+        return;
     }
 
-    // Обновляем отображение предметов
-    displayItems();
+    QTextStream out(&file);
+
+    for (auto it = subjectRepetitors.begin(); it != subjectRepetitors.end(); ++it) {
+        const QString &subject = it.key();
+        for (const QString &name : it.value()) {
+            out << subject << ";" << name << "\n";
+        }
+    }
+
+    file.close();
 }

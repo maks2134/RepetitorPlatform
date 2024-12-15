@@ -12,8 +12,10 @@ class TestBase : public QWidget, public NavigationManager {
 Q_OBJECT
 
 public:
-    explicit TestBase(QWidget *parent = nullptr);
+    explicit TestBase(QWidget *parent = nullptr, const QString &filename = "");
+    void loadTest(const QString &fileName);
     ~TestBase();
+
 
 private:
     Ui::testBase *ui;
@@ -24,6 +26,7 @@ private slots:
     void onNextButtonClicked();
     void onPreviousButtonClicked();
     void onFinishButtonClicked();
+    void onReturnButtonClicked();
 };
 
 #endif // TESTBASE_H

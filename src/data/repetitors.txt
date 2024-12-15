@@ -1,1 +1,5 @@
-Marya,Math,2024-11-18,test1
+Егор;БЖЧ;C:\pnya\RepetitorPlatform\src\data\math-4.txt
+Максим;ЭП;C:\pnya\RepetitorPlatform\src\data\math-4.txt
+Алексей;БЖЧ;C:\pnya\RepetitorPlatform\src\data\math-4.txt
+ЖУК;математика;C:\pnya\RepetitorPlatform\src\data\math-5.txt
+

@@ -8,7 +8,7 @@ namespace Ui { class Register; }
 QT_END_NAMESPACE
 
 
-class Register : public AuthBase {
+class Register : public AuthBase{
 Q_OBJECT
 
 public:
@@ -17,9 +17,11 @@ public:
 
 private slots:
     void onRegisterButtonClicked();
-
+    void onAddTestButtonClicked();
+    void onBackButtonClicked();
 private:
     Ui::Register *ui;
+    bool validateTestFile(const QString &filePath, const QString &subject);
 };
 
 #endif // REPETITORPLATFORM_REGISTER_H

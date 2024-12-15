@@ -8,7 +8,7 @@
 #include <QString>
 #include <QFile>
 #include "../repetitors/Repetitor.h" // Подключаем класс репетитора
-
+//, public Repetitor
 class BaseWin : public QWidget, public Repetitor { // Базовый класс, наследуемый от QWidget
 Q_OBJECT
 
