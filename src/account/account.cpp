@@ -6,7 +6,7 @@ account::account(QWidget *parent) :
         BaseWin(parent), // Наследуемся от BaseWin
         ui(new Ui::account) {
     ui->setupUi(this); // Загружаем интерфейс account
-    loadCalendarDataFromFile("C:\\pnya\\RepetitorPlatform\\src\\data\\repetitors.txt");
+    loadCalendarDataFromFile(R"(C:\pnya\RepetitorPlatform\src\data\repetitors.txt)");
     // Подключаем кнопку "Удалить" к слоту
     connect(ui->pushButton_2, &QPushButton::clicked, this, &account::onDeleteButtonClicked);
     connect(ui->pushButton, &QPushButton::clicked, this, &account::onReturnButtonClicked);
@@ -63,7 +63,7 @@ void account::onDeleteButtonClicked() {
     }
 
 //    ui->statusLabel->setText("Репетитор удалён.");
-    saveRepetitorsToFile("C:\\pnya\\RepetitorPlatform\\src\\data\\repetitors.txt"); // Сохранение изменений
+    saveRepetitorsToFile(R"(D:\Clion\RepetitorPlatform-main\RepetitorPlatform\src\data\repetitors.txt)"); // Сохранение изменений
 }
 
 

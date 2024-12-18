@@ -51,7 +51,14 @@ void TestBase::onFinishButtonClicked() {
 
 void TestBase::calculateResults() {
     int correctCount = 0;
-    for (int i = 0; i < getTotalQuestions(); ++i) {
+    int totalQuestions = getTotalQuestions();
+
+    if (totalQuestions == 0) {
+        QMessageBox::warning(this, "Error", "No questions available to calculate results.");
+        return;
+    }
+
+    for (int i = 0; i < totalQuestions; ++i) {
         if (getUserAnswer(i).trimmed().toLower() == getCorrectAnswer(i).trimmed().toLower()) {
             correctCount++;
         }
@@ -59,20 +66,20 @@ void TestBase::calculateResults() {
 
     QString resultMessage = QString("Correct Answers: %1/%2\nGrade: %3")
             .arg(correctCount)
-            .arg(getTotalQuestions())
-            .arg((correctCount * 10) / getTotalQuestions());
+            .arg(totalQuestions)
+            .arg((correctCount * 10) / totalQuestions);
 
     QMessageBox::information(this, "Results", resultMessage);
 }
 
 void TestBase::loadTest(const QString &fileName) {
-    // Очищаем текущие вопросы и ответы перед загрузкой новых
     questions.clear();
     correctAnswers.clear();
     userAnswers.clear();
 
     QFile file(fileName);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        QMessageBox::warning(this, "Error", "Failed to open the test file.");
         return;
     }
 
@@ -83,18 +90,23 @@ void TestBase::loadTest(const QString &fileName) {
         if (parts.size() == 2) {
             questions.append(parts[0]);
             correctAnswers.append(parts[1]);
-            userAnswers.append("");  // Инициализируем ответы пользователя пустыми строками
+            userAnswers.append("");  // Initialize with empty answers
         }
     }
 
     file.close();
 
-    currentQuestionIndex = 0;  // Сбрасываем индекс текущего вопроса
-    displayQuestion();         // Отображаем первый вопрос
+    if (questions.isEmpty()) {
+        QMessageBox::warning(this, "Error", "No questions found in the test file.");
+        return;
+    }
+
+    currentQuestionIndex = 0;
+    displayQuestion();
 }
 
 void TestBase::onReturnButtonClicked() {
-    mainWin *mainWindow = new mainWin;  // Создаём новое окно mainWin
+    auto *mainWindow = new mainWin;  // Создаём новое окно mainWin
     mainWindow->show();
     this->close();  // Закрываем текущее окно
 }

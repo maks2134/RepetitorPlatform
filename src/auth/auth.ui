@@ -6,87 +6,92 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>489</width>
-    <height>458</height>
+    <width>337</width>
+    <height>466</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Auth</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">QWidget {
-    background-color: #2E2E2E;
-    color: #FFFFFF;
-    font-family: Roboto, sans-serif;
+   <string notr="true">/* Общий стиль для окна */
+QWidget {
+    background-color: #0d1b2a; /* Глубокий синий фон */
+    color: #e0e1dd; /* Светло-серый текст */
+    font-family: &quot;Arial&quot;, sans-serif;
+    font-size: 14px;
 }
 
-QLabel {
-    font-size: 18px;
-    color: #FF5733;
-    padding: 10px;
+/* Заголовок */
+QLabel#label {
+    color: #0077be; /* Ярко-синий акцент для заголовка */
+    font-size: 20px;
+    font-weight: bold;
     text-align: center;
+    margin-bottom: 10px;
 }
 
+/* Стиль для других QLabel */
+QLabel {
+    color: #e0e1dd; /* Светло-серый текст */
+    font-size: 14px;
+}
+
+/* Поля ввода */
 QLineEdit {
-    border: 2px solid #444;
+    background-color: #1b263b; /* Темно-синий фон для ввода */
+    border: 1px solid #0077be; /* Ярко-синяя рамка */
+    color: #e0e1dd; /* Светлый текст */
+    padding: 5px;
     border-radius: 5px;
-    padding: 8px;
-    background-color: #1C1C1C;
-    color: #FFFFFF;
-    margin: 10px 0;
 }
 
+QLineEdit:focus {
+    border: 1px solid #00aaff; /* Голубая рамка при фокусе */
+}
+
+/* Кнопки */
 QPushButton {
-    border: 2px solid #444;
-    border-radius: 5px;
-    background-color: #333;
-    color: #FFFFFF;
-    padding: 10px;
-    margin: 5px 0;
+    background-color: #0077be; /* Ярко-синий фон */
+    color: #e0e1dd; /* Светлый текст */
+    border: 1px solid #005f99; /* Темно-синяя рамка */
+    border-radius: 10px;
+    padding: 8px;
+    font-weight: bold;
 }
 
 QPushButton:hover {
-    background-color: #FF5733;
+    background-color: #005f99; /* Темно-синий фон при наведении */
+    color: #e0e1dd; /* Светлый текст */
 }
 
 QPushButton:pressed {
-    background-color: #C70039;
+    background-color: #003f66; /* Более глубокий синий при нажатии */
+    border: 1px solid #003f66;
 }
 
-QGroupBox {
-    border: 2px solid #FF5733;
-    border-radius: 10px;
-    padding: 20px;
-    margin: 20px;
+/* Кнопка регистрации (вторичная) */
+QPushButton#pushButton_2 {
+    background-color: #1b263b; /* Темно-синий фон */
+    border: 1px solid #0077be; /* Ярко-синяя рамка */
+    color: #e0e1dd; /* Светлый текст */
+}
+
+QPushButton#pushButton_2:hover {
+    background-color: #0077be; /* Ярко-синий фон при наведении */
+    color: #0d1b2a; /* Темный текст для контраста */
 }</string>
   </property>
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>130</x>
+     <x>30</x>
      <y>50</y>
      <width>277</width>
      <height>377</height>
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout">
-    <item row="5" column="0">
-     <widget class="QPushButton" name="pushButton">
-      <property name="styleSheet">
-       <string notr="true"/>
-      </property>
-      <property name="text">
-       <string>ВОЙТИ</string>
-      </property>
-     </widget>
-    </item>
-    <item row="4" column="0">
-     <widget class="QLineEdit" name="lineEdit_2">
-      <property name="styleSheet">
-       <string notr="true"/>
-      </property>
-     </widget>
-    </item>
     <item row="0" column="0">
      <widget class="QLabel" name="label">
       <property name="toolTip">
@@ -100,16 +105,10 @@ QGroupBox {
       </property>
      </widget>
     </item>
-    <item row="1" column="0">
-     <widget class="QLabel" name="label_2">
-      <property name="toolTip">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:24pt;&quot;&gt;ВХОД В АККАУНТ&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-      </property>
+    <item row="4" column="0">
+     <widget class="QLineEdit" name="lineEdit_2">
       <property name="styleSheet">
        <string notr="true"/>
-      </property>
-      <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;ВВЕДИТЕ ЛОГИН&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
      </widget>
     </item>
@@ -120,7 +119,43 @@ QGroupBox {
       </property>
      </widget>
     </item>
+    <item row="3" column="0">
+     <widget class="QLabel" name="label_3">
+      <property name="toolTip">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;ВВЕДИТЕ ПАРОЛЬ&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QLabel" name="label_2">
+      <property name="toolTip">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;ВВЕДИТЕ ЛОГИН&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+    </item>
     <item row="6" column="0">
+     <widget class="QPushButton" name="pushButton">
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
+      <property name="text">
+       <string>ВОЙТИ</string>
+      </property>
+     </widget>
+    </item>
+    <item row="7" column="0">
      <widget class="QPushButton" name="pushButton_2">
       <property name="styleSheet">
        <string notr="true"/>
@@ -130,18 +165,18 @@ QGroupBox {
       </property>
      </widget>
     </item>
-    <item row="3" column="0">
-     <widget class="QLabel" name="label_3">
-      <property name="toolTip">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:24pt;&quot;&gt;ВХОД В АККАУНТ&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    <item row="5" column="0">
+     <spacer name="horizontalSpacer">
+      <property name="orientation">
+       <enum>Qt::Orientation::Horizontal</enum>
       </property>
-      <property name="styleSheet">
-       <string notr="true"/>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>40</width>
+        <height>20</height>
+       </size>
       </property>
-      <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;ВВЕДИТЕ ПАРОЛЬ&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-      </property>
-     </widget>
+     </spacer>
     </item>
    </layout>
   </widget>

@@ -3,7 +3,7 @@
 #include <QMessageBox>
 
 AuthBase::AuthBase(QWidget *parent)
-        : QWidget(parent), credentialFile("C:\\pnya\\RepetitorPlatform\\src\\data\\credentials.txt") {
+        : QWidget(parent), credentialFile(R"(C:\pnya\RepetitorPlatform\src\data\credentials.txt)") {
     // Загрузка учетных данных
     if (!credentialFile.load()) {
         QMessageBox::warning(this, "Ошибка", "Не удалось загрузить учетные данные.");

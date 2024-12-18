@@ -14,98 +14,81 @@
    <string>testBase</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">QWidget {
-        background-color: #2E2E2E;
-        font-family: Arial, sans-serif;
-        }
+   <string notr="true">/* Общий стиль для окна */
+QWidget {
+    background-color: #0d1b2a; /* Глубокий синий фон */
+    color: #e0e1dd; /* Светло-серый текст */
+    font-family: &quot;Arial&quot;, sans-serif;
+    font-size: 14px;
+}
 
-        QPushButton {
-        border: 2px solid #444;
-        border-radius: 5px;
-        background-color: #333;
-        color: #FFFFFF;
-        padding: 8px 15px;
-        margin: 5px;
-        }
+/* Заголовок */
+QLabel#label {
+    color: #0077be; /* Ярко-синий акцент для заголовка */
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 10px;
+}
 
-        QPushButton:hover {
-        background-color: #FF5733;
-        }
+/* Стиль для других QLabel */
+QLabel {
+    color: #e0e1dd; /* Светло-серый текст */
+    font-size: 14px;
+}
 
-        QPushButton:pressed {
-        background-color: #C70039;
-        }
+/* Поля ввода */
+QLineEdit {
+    background-color: #1b263b; /* Темно-синий фон для ввода */
+    border: 1px solid #0077be; /* Ярко-синяя рамка */
+    color: #e0e1dd; /* Светлый текст */
+    padding: 5px;
+    border-radius: 5px;
+}
 
-        QLineEdit {
-        border: 2px solid #444;
-        border-radius: 5px;
-        padding: 8px;
-        background-color: #1C1C1C;
-        color: #FFFFFF;
-        margin-right: 10px;
-        }
+QLineEdit:focus {
+    border: 1px solid #00aaff; /* Голубая рамка при фокусе */
+}
 
-        QLineEdit:focus {
-        border-color: #FF5733;
-        background-color: #333;
-        }
+/* Кнопки */
+QPushButton {
+    background-color: #0077be; /* Ярко-синий фон */
+    color: #e0e1dd; /* Светлый текст */
+    border: 1px solid #005f99; /* Темно-синяя рамка */
+    border-radius: 10px;
+    padding: 8px;
+    font-weight: bold;
+}
 
-        QCalendarWidget QToolButton {
-        height: 30px;
-        width: 70px;
-        color: #FFFFFF;
-        font-size: 14px;
-        icon-size: 20px, 20px;
-        background-color: #FF5733;
-        border: none;
-        margin: 5px;
-        }
+QPushButton:hover {
+    background-color: #005f99; /* Темно-синий фон при наведении */
+    color: #e0e1dd; /* Светлый текст */
+}
 
-        QCalendarWidget QToolButton:hover {
-        background-color: #C70039;
-        }
+QPushButton:pressed {
+    background-color: #003f66; /* Более глубокий синий при нажатии */
+    border: 1px solid #003f66;
+}
 
-        QCalendarWidget QMenu {
-        width: 100px;
-        background-color: #333;
-        color: #FFFFFF;
-        }
+/* Кнопка регистрации (вторичная) */
+QPushButton#pushButton_2 {
+    background-color: #1b263b; /* Темно-синий фон */
+    border: 1px solid #0077be; /* Ярко-синяя рамка */
+    color: #e0e1dd; /* Светлый текст */
+}
 
-        QCalendarWidget QSpinBox {
-        width: 50px;
-        font-size: 14px;
-        color: #FFFFFF;
-        background-color: #1C1C1C;
-        selection-background-color: #FF5733;
-        selection-color: #000000;
-        }
-
-        QCalendarWidget QWidget#qt_calendar_navigationbar {
-        background-color: #333;
-        }
-
-        QCalendarWidget QTableView {
-        border-width: 1px;
-        border-color: #444;
-        border-style: solid;
-        border-radius: 5px;
-        gridline-color: #444;
-        background-color: #1C1C1C;
-        }
-            QCalendarWidget QHeaderView::section {
-            background-color: #333;
-            color: #FFFFFF;
-            padding: 5px;
-            border: 1px solid #444;
-            }</string>
+QPushButton#pushButton_2:hover {
+    background-color: #0077be; /* Ярко-синий фон при наведении */
+    color: #0d1b2a; /* Темный текст для контраста */
+}</string>
   </property>
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>540</x>
+     <x>580</x>
      <y>20</y>
-     <width>49</width>
-     <height>16</height>
+     <width>61</width>
+     <height>41</height>
     </rect>
    </property>
    <property name="text">
@@ -173,10 +156,10 @@
   <widget class="QPushButton" name="pushButton">
    <property name="geometry">
     <rect>
-     <x>470</x>
-     <y>490</y>
+     <x>460</x>
+     <y>500</y>
      <width>296</width>
-     <height>44</height>
+     <height>31</height>
     </rect>
    </property>
    <property name="text">

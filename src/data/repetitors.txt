@@ -1,5 +1,2 @@
 Егор;БЖЧ;C:\pnya\RepetitorPlatform\src\data\math-4.txt
 Максим;ЭП;C:\pnya\RepetitorPlatform\src\data\math-4.txt
-Алексей;БЖЧ;C:\pnya\RepetitorPlatform\src\data\math-4.txt
-ЖУК;математика;C:\pnya\RepetitorPlatform\src\data\math-5.txt
-

@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>addtestwin</class>
+ <widget class="QWidget" name="addtestwin">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>490</width>
+    <height>457</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>addtestwin</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">/* Общий стиль для окна */
+QWidget {
+    background-color: #0d1b2a; /* Глубокий синий фон */
+    color: #e0e1dd; /* Светло-серый текст */
+    font-family: &quot;Arial&quot;, sans-serif;
+    font-size: 14px;
+}
+
+/* Заголовок */
+QLabel#label {
+    color: #0077be; /* Ярко-синий акцент для заголовка */
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+/* Стиль для других QLabel */
+QLabel {
+    color: #e0e1dd; /* Светло-серый текст */
+    font-size: 14px;
+}
+
+/* Поля ввода */
+QLineEdit {
+    background-color: #1b263b; /* Темно-синий фон для ввода */
+    border: 1px solid #0077be; /* Ярко-синяя рамка */
+    color: #e0e1dd; /* Светлый текст */
+    padding: 5px;
+    border-radius: 5px;
+}
+
+QLineEdit:focus {
+    border: 1px solid #00aaff; /* Голубая рамка при фокусе */
+}
+
+/* Кнопки */
+QPushButton {
+    background-color: #0077be; /* Ярко-синий фон */
+    color: #e0e1dd; /* Светлый текст */
+    border: 1px solid #005f99; /* Темно-синяя рамка */
+    border-radius: 10px;
+    padding: 8px;
+    font-weight: bold;
+}
+
+QPushButton:hover {
+    background-color: #005f99; /* Темно-синий фон при наведении */
+    color: #e0e1dd; /* Светлый текст */
+}
+
+QPushButton:pressed {
+    background-color: #003f66; /* Более глубокий синий при нажатии */
+    border: 1px solid #003f66;
+}
+
+/* Кнопка регистрации (вторичная) */
+QPushButton#pushButton_2 {
+    background-color: #1b263b; /* Темно-синий фон */
+    border: 1px solid #0077be; /* Ярко-синяя рамка */
+    color: #e0e1dd; /* Светлый текст */
+}
+
+QPushButton#pushButton_2:hover {
+    background-color: #0077be; /* Ярко-синий фон при наведении */
+    color: #0d1b2a; /* Темный текст для контраста */
+}</string>
+  </property>
+  <widget class="QWidget" name="layoutWidget_2">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>10</y>
+     <width>451</width>
+     <height>421</height>
+    </rect>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout_2">
+    <item>
+     <widget class="QLabel" name="label_8">
+      <property name="toolTip">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:24pt;&quot;&gt;ВХОД В АККАУНТ&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:18pt; font-weight:700;&quot;&gt;РЕГИСТРАЦИЯ ТЕСТОВ&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_12">
+      <property name="toolTip">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:24pt;&quot;&gt;ВХОД В АККАУНТ&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;ВВЕДИТЕ ВАШЕ ИМЯ&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLineEdit" name="lineEditName"/>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_13">
+      <property name="toolTip">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:24pt;&quot;&gt;ВХОД В АККАУНТ&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;ПРЕДМЕТ&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLineEdit" name="lineEditSubject"/>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_14">
+      <property name="toolTip">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:24pt;&quot;&gt;ВХОД В АККАУНТ&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;ВАШ ТЕСТ&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButtonAddTest">
+      <property name="text">
+       <string>ЗАРЕГЕСТРИРОВАТЬ ТЕСТЫ</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

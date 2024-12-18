@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.28)
+cmake_minimum_required(VERSION 3.26)
 project(RepetitorPlatform)
 
 set(CMAKE_CXX_STANDARD 23)
@@ -45,8 +45,8 @@ add_executable(RepetitorPlatform src/main.cpp
         src/file/File.h
         src/file/QuestionFile.cpp
         src/file/QuestionFile.h
-        src/file/CalendarFile.cpp
-        src/file/CalendarFile.h
+        src/file/TestFile.cpp
+        src/file/TestFile.h
         src/file/CredentialFile.cpp
         src/file/CredentialFile.h
         src/exception/ErrorBase.cpp
@@ -61,6 +61,11 @@ add_executable(RepetitorPlatform src/main.cpp
         src/exception/CredentialFileError.h
         src/finder/RepetitorSearchWidget.cpp
         src/finder/RepetitorSearchWidget.h
+        src/test/Test.cpp
+        src/test/Test.h
+        src/test/addtestwin.cpp
+        src/test/addtestwin.h
+        src/test/addtestwin.ui
 )
 target_link_libraries(RepetitorPlatform
         Qt::Core

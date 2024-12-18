@@ -28,8 +28,8 @@ void RepetitorSearchWidget::searchRepetitors() {
     if (subjectTree->contains(subject)) {
         auto repetitors = subjectTree->operator[](subject);  // Use operator[] to get the value
         for (const auto &repetitor : repetitors) {
-            QListWidgetItem *item = new QListWidgetItem(repetitor.getName());
-            item->setData(Qt::UserRole, repetitor.getTestFilePath()); // Save the file path
+            auto* item = new QListWidgetItem(repetitor.getName());
+            //item->setData(Qt::UserRole, repetitor.getTestFilePath()); // Save the file path
             repetitorListWidget->addItem(item);
         }
     } else {

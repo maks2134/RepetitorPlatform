@@ -10,7 +10,7 @@
 #include "../basewin/basewin.h"
 #include "../test/testBase.h"
 #include "../finder/RepetitorSearchWidget.h"
-
+#include "../test/Test.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class mainwin; }
@@ -22,19 +22,21 @@ Q_OBJECT
 public:
     explicit mainWin(QWidget *parent = nullptr);
     ~mainWin() override;
-    void loadRepetitors(const QString &fileName); // Загрузка репетиторов
+    QDate selectedDate;
+    QList<Test>* listTest;
 
 private:
     Ui::mainwin *ui;
-    BinarySearchTree<QString, QVector<Repetitor>> subjectTree;
+    BinarySearchTree<QString, QVector<Test>> testTree;
     void loadCalendarData(const QString &fileName);
 
 private slots:
     void onTestButtonClicked();
     void onAccountButtonClicked();
-    void onSearchButtonClicked();                 // Поиск репетиторов по предмету
+    void searchTests(const QString &query);                 // Поиск репетиторов по предмету
     void onRepetitorSelected(QListWidgetItem *);  // Обработка выбора репетитора
-
+    void onCalendarClicked(QDate date);
+    void addTestClicked();
 protected:
     QMap<QDate, QString> calendarData;
 

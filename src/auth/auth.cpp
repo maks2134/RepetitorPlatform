@@ -3,13 +3,12 @@
 #include "../main/mainwin.h"
 #include "ui_Auth.h"
 #include "../exception/AuthError.h"
-#include "../exception/CredentialFileError.h"
 #include <QMessageBox>
+#include <QPixmap>
 
 Auth::Auth(QWidget *parent) :
         AuthBase(parent), ui(new Ui::Auth) {
     ui->setupUi(this);
-
     connect(ui->pushButton, &QPushButton::clicked, this, &Auth::onLoginClicked);
     connect(ui->pushButton_2, &QPushButton::clicked, this, &Auth::onRegisterClicked);
 }
@@ -24,7 +23,7 @@ void Auth::onLoginClicked() {
 
     try {
         if (login.isEmpty() || password.isEmpty()) {
-            throw AuthError::missingFields(); // Выбрасываем ошибку для пустых полей
+            throw AuthError::missingFields();
         }
 
         QString inputPasswordHash = hashPassword(password);
