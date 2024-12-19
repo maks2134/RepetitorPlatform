@@ -84,7 +84,6 @@ void mainWin::onTestButtonClicked() {
 void mainWin::onRepetitorSelected(QListWidgetItem *item) {
     QString testFilePath = item->data(Qt::UserRole).toString();
     auto *testWidget = new TestBase;
-    qDebug() << testFilePath;
     testWidget->loadTest(testFilePath);
     testWidget->show();
     this->close();

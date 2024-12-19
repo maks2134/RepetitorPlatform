@@ -106,7 +106,6 @@ void account::onReturnButtonClicked() {
 void account::saveRepetitorsToFile(const QString &fileName) {
     QFile file(fileName);
     if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
-        qDebug() << "Cannot open file for writing:" << fileName;
         return;
     }
 
@@ -132,7 +131,6 @@ void account::saveRepetitorsToFile(const QString &fileName) {
     }
 
     file.close();
-    qDebug() << "File saved successfully:" << fileName;
 }
 
 
@@ -141,7 +139,6 @@ void account::saveRepetitorsToFile(const QString &fileName) {
 void account::loadRepetitorsFromFile(const QString &fileName) {
     QFile file(fileName);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        qDebug() << "Cannot open file:" << fileName;
         return;
     }
 

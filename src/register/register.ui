@@ -142,6 +142,13 @@ QPushButton#pushButton_2:hover {
      <widget class="QLineEdit" name="lineEdit_3"/>
     </item>
     <item>
+     <widget class="QLabel" name="label_5">
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item>
      <widget class="QPushButton" name="pushButton_2">
       <property name="text">
        <string>ЗАРЕГЕСТРИРОВАТЬСЯ</string>
