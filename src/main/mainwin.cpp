@@ -14,7 +14,8 @@ mainWin::mainWin(QWidget *parent) :
     auto* testFile = new TestFile(R"(C:\pnya\RepetitorPlatform\src\data\test.txt)");
     testFile->load();
     listTest = new QList<Test>(testFile->getList());
-
+    ui->repetitorListWidget->setSortingEnabled(true);
+    ui->searchLineEdit->setPlaceholderText("Введите данные");
     for(auto& elem : *listTest){
         qDebug() << elem.getDate();
     }
@@ -150,11 +151,13 @@ void mainWin::onCalendarClicked(QDate date) {
 void mainWin::addTestClicked() {
     auto* addTest = new addtestwin();
     addTest->date = selectedDate;
+
     addTest->show();
     connect(addTest, &addtestwin::addTestDestroyed, this, [&](){
         auto* testFile = new TestFile(R"(C:\pnya\RepetitorPlatform\src\data\test.txt)");
         testFile->load();
         listTest = new QList<Test>(testFile->getList());
+        loadCalendarData(R"(C:\pnya\RepetitorPlatform\src\data\test.txt)");
         onCalendarClicked(selectedDate);
     });
 }

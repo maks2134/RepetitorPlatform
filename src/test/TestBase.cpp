@@ -1,8 +1,10 @@
 #include "TestBase.h"
 #include "ui_testBase.h"
 #include "../main/mainwin.h"
+#include "../file/ResultFile.h"
 #include <QMessageBox>
 #include <QFile>
+#include <QInputDialog>
 
 TestBase::TestBase(QWidget *parent, const QString &filename) :
         QWidget(parent),
@@ -13,11 +15,12 @@ TestBase::TestBase(QWidget *parent, const QString &filename) :
     userAnswers.resize(getTotalQuestions());
     displayQuestion();
 
+    updateQuestionCounter();
+
     connect(ui->nextButton, &QPushButton::clicked, this, &TestBase::onNextButtonClicked);
     connect(ui->previousButton, &QPushButton::clicked, this, &TestBase::onPreviousButtonClicked);
     connect(ui->finishButton, &QPushButton::clicked, this, &TestBase::onFinishButtonClicked);
     connect(ui->pushButton, &QPushButton::clicked, this, &TestBase::onReturnButtonClicked);
-
 }
 
 TestBase::~TestBase() {
@@ -30,18 +33,30 @@ void TestBase::displayQuestion() {
 
     ui->questionLabel->setText(getQuestion(getCurrentIndex()));
     ui->answerLineEdit->setText(getUserAnswer(getCurrentIndex()));
+
+    updateQuestionCounter();  // Обновляем счетчик
 }
 
 void TestBase::onNextButtonClicked() {
+    if (getCurrentIndex() >= getTotalQuestions() - 1) {
+        QMessageBox::warning(this, "Warning", "Это последний вопрос.");
+        return;
+    }
+
     setUserAnswer(getCurrentIndex(), ui->answerLineEdit->text());
     nextQuestion();
-    displayQuestion();
+    displayQuestion();  // displayQuestion вызовет updateQuestionCounter
 }
 
 void TestBase::onPreviousButtonClicked() {
+    if (getCurrentIndex() <= 0) {
+        QMessageBox::warning(this, "Warning", "Это первый вопрос.");
+        return;
+    }
+
     setUserAnswer(getCurrentIndex(), ui->answerLineEdit->text());
     previousQuestion();
-    displayQuestion();
+    displayQuestion();  // displayQuestion вызовет updateQuestionCounter
 }
 
 void TestBase::onFinishButtonClicked() {
@@ -58,19 +73,37 @@ void TestBase::calculateResults() {
         return;
     }
 
+    // Подсчет правильных ответов
     for (int i = 0; i < totalQuestions; ++i) {
         if (getUserAnswer(i).trimmed().toLower() == getCorrectAnswer(i).trimmed().toLower()) {
             correctCount++;
         }
     }
 
-    QString resultMessage = QString("Correct Answers: %1/%2\nGrade: %3")
-            .arg(correctCount)
-            .arg(totalQuestions)
-            .arg((correctCount * 10) / totalQuestions);
+    // Вычисляем результат
+    int grade = (correctCount * 100) / totalQuestions;  // Пример: процент правильных ответов
 
+    // Формируем строку с результатом
+    QString resultMessage = QString("Grade: %1%").arg(grade);
+
+    // Запрашиваем имя пользователя
+    bool ok;
+    QString userName = QInputDialog::getText(nullptr, "Введите имя", "Ваше имя:", QLineEdit::Normal, "", &ok);
+
+    if (!ok || userName.isEmpty()) {
+        QMessageBox::warning(nullptr, "Ошибка", "Имя не введено. Результат не будет сохранен.");
+        return;
+    }
+
+    // Показываем результат пользователю
     QMessageBox::information(this, "Results", resultMessage);
+
+    // Создаем объект ResultFile для сохранения результатов
+    ResultFile resultFile(R"(C:\pnya\RepetitorPlatform\src\data\result.txt)");
+    resultFile.saveResult(userName, resultMessage);  // Сохраняем имя и результат
 }
+
+
 
 void TestBase::loadTest(const QString &fileName) {
     questions.clear();
@@ -103,6 +136,23 @@ void TestBase::loadTest(const QString &fileName) {
 
     currentQuestionIndex = 0;
     displayQuestion();
+    updateQuestionCounter();  // Обновляем счетчик вопросов
+}
+
+void TestBase::updateQuestionCounter() {
+    if (!ui->questionCounterLabel) {
+        qDebug() << "questionCounterLabel is not accessible!";
+        return;
+    }
+
+    int totalQuestions = getTotalQuestions();
+    if (totalQuestions == 0) {
+        ui->questionCounterLabel->setText("Вопрос 0 из 0");
+    } else {
+        ui->questionCounterLabel->setText(QString("Вопрос %1 из %2")
+                                                  .arg(getCurrentIndex() + 1)
+                                                  .arg(totalQuestions));
+    }
 }
 
 void TestBase::onReturnButtonClicked() {

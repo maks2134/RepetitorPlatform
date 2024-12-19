@@ -90,7 +90,11 @@ QPushButton#pushButton_2:hover {
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout">
     <item>
-     <widget class="QLineEdit" name="searchLineEdit"/>
+     <widget class="QLineEdit" name="searchLineEdit">
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
     </item>
     <item>
      <widget class="QListWidget" name="repetitorListWidget"/>
@@ -98,7 +102,7 @@ QPushButton#pushButton_2:hover {
     <item>
      <widget class="QPushButton" name="pushButton_5">
       <property name="text">
-       <string>Тесты</string>
+       <string>ПОИСК</string>
       </property>
      </widget>
     </item>

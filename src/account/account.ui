@@ -96,16 +96,9 @@ QPushButton#pushButton_2:hover {
       <widget class="QListWidget" name="listWidget">
        <item>
         <property name="text">
-         <string>МАКСИМ</string>
+         <string/>
         </property>
        </item>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="instructionLabel">
-       <property name="text">
-        <string>ЭП</string>
-       </property>
       </widget>
      </item>
      <item>

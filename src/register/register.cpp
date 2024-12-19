@@ -28,6 +28,14 @@ void Register::onRegisterButtonClicked() {
     QString password = ui->lineEdit_2->text();
     QString confirmPassword = ui->lineEdit_3->text();
 
+    // Регулярное выражение для проверки на отсутствие пробелов в логине
+    QRegularExpression regex("^\\S+$"); // ^\S+$ означает, что строка не содержит пробелов
+
+    if (!regex.match(login).hasMatch()) {
+        QMessageBox::warning(this, "Ошибка", "Логин не должен содержать пробелы.");
+        return;
+    }
+
     try {
         if (login.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
             throw AuthError::missingFields(); // Ошибка: пустые поля

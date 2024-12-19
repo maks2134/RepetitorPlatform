@@ -66,6 +66,8 @@ add_executable(RepetitorPlatform src/main.cpp
         src/test/addtestwin.cpp
         src/test/addtestwin.h
         src/test/addtestwin.ui
+        src/file/ResultFile.cpp
+        src/file/ResultFile.h
 )
 target_link_libraries(RepetitorPlatform
         Qt::Core

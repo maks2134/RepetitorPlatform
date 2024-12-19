@@ -1,3 +1,3 @@
-Наталья|Математика|02.12.2024||C:\pnya\RepetitorPlatform\src\data\math-3.txt|
-Лика|ОАиП|18.12.2024||C:\pnya\RepetitorPlatform\src\data\math-5.txt|
-Анна|поав|18.12.2024||C:\pnya\RepetitorPlatform\src\data\math-5.txt|
+Елена|ОАИП|20.12.2024||C:\pnya\RepetitorPlatform\src\data\math-4.txt|
+Максим|ПНАЯВУ|20.12.2024||C:\pnya\RepetitorPlatform\src\data\math-3.txt|
+Жук|СММиФ|20.12.2024||C:\pnya\RepetitorPlatform\src\data\math-5.txt|

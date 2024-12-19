@@ -1,2 +1,1 @@
-Егор;БЖЧ;C:\pnya\RepetitorPlatform\src\data\math-4.txt
-Максим;ЭП;C:\pnya\RepetitorPlatform\src\data\math-4.txt
+Егор;БЖЧ
